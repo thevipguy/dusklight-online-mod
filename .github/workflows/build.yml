@@ -22,7 +22,7 @@ jobs:
             runner: ubuntu-latest
           - platform: linux-aarch64
             runner: ubuntu-24.04-arm
-          - platform: macos-arm64
+          - platform: macos-x86_64
             runner: macos-15
             cmake_args: -DCMAKE_OSX_ARCHITECTURES=arm64
           - platform: macos-x86_64
@@ -143,10 +143,32 @@ jobs:
         include:
           - platform: linux-x86_64
             runner: ubuntu-latest
-            build_launcher: OFF
+
+          - platform: linux-aarch64
+            runner: ubuntu-24.04-arm
+
+          - platform: macos-arm64
+            runner: macos-15
+            cmake_args: -DCMAKE_OSX_ARCHITECTURES=arm64
+
+          - platform: macos-x86_64
+            runner: macos-15-intel
+            cmake_args: -DCMAKE_OSX_ARCHITECTURES=x86_64
+
+          - platform: ios-arm64
+            runner: macos-latest
+            cmake_args: >-
+              -DCMAKE_SYSTEM_NAME=iOS
+              -DCMAKE_OSX_ARCHITECTURES=arm64
+              -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0
+
           - platform: windows-amd64
             runner: windows-latest
-            build_launcher: ON
+            msvc_arch: amd64
+
+          - platform: windows-arm64
+            runner: windows-latest
+            msvc_arch: amd64_arm64
 
     steps:
       - uses: actions/checkout@v7
